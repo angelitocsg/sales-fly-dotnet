@@ -1,4 +1,56 @@
 @inherits LayoutComponentBase
 
-<NavMenu />
-@Body
+<NavMenu Nome=@Nome />
+
+<div class="container">
+    @if (string.IsNullOrWhiteSpace(Nome))
+    {
+        <div class="card mt-4" style="max-width: 330px; margin: 0 auto">
+            <div class="card-body">
+                <h5 class="card-title">Passagens aéreas</h5>
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Informe seu nome</label>
+                        <input type="text" class="form-control" @bind-value=nome>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" @onclick=HandleEnterClick>
+                            Entrar
+                        </button>
+                    </div>
+                </form>
+                @if (!string.IsNullOrWhiteSpace(error))
+                {
+                    <div class="alert alert-danger alert-sm p-1 ps-3 pe-3 mt-3">
+                        @error
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <CascadingValue Value="Nome">
+            @Body
+        </CascadingValue>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Nome { get; set; }
+
+    private string nome { get; set; }
+    private string error { get; set; }
+
+    private void HandleEnterClick()
+    {
+        if (!string.IsNullOrWhiteSpace(nome) && nome.Length > 3)
+        {
+            Nome = nome;
+            error = string.Empty;
+        }
+        else
+            error = "Nome inválido";
+    }
+}

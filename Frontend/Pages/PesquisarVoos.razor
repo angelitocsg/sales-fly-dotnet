@@ -1,0 +1,284 @@
+@page "/pesquisar-voos"
+
+<h1 class="mt-3 mb-3">Pesquisar vôos</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form>
+            <div class="row">
+                <div class="col-lg mb-3">
+                    <label for="origem" class="form-label">Origem</label>
+                    <select class="form-select" name="origem" id="origem">
+                        <option selected>-- Selecione o aeroporto de origem --</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+                <div class="col-lg mb-3">
+                    <label for="destino" class="form-label">Destino</label>
+                    <select class="form-select" name="destino" id="destino">
+                        <option selected>-- Selecione o aeroporto de destino --</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3 mb-3">
+                    <label for="data" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="data" name="data">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark">Pesquisar</button>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4 row">
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Origem</th>
+                                <th>Destino</th>
+                                <th>Saída</th>
+                                <th>Chegada</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>origem</td>
+                                <td>destino</td>
+                                <td>00/00/0000</td>
+                                <td>00/00/0000</td>
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
+                                        carrinho</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>origem</td>
+                                                <td>destino</td>
+                                                <td>00/00/0000</td>
+                                                <td>00/00/0000</td>
+                                                <td>operadora</td>
+                                                <td>preço</td>
+                                            </tr>
+                                            <tr>
+                                                <td>origem</td>
+                                                <td>destino</td>
+                                                <td>00/00/0000</td>
+                                                <td>00/00/0000</td>
+                                                <td>operadora</td>
+                                                <td>preço</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>origem</td>
+                                <td>destino</td>
+                                <td>00/00/0000</td>
+                                <td>00/00/0000</td>
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
+                                        carrinho</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td>origem</td>
+                                                <td>destino</td>
+                                                <td>00/00/0000</td>
+                                                <td>00/00/0000</td>
+                                                <td>operadora</td>
+                                                <td>preço</td>
+                                            </tr>
+                                            <tr>
+                                                <td>origem</td>
+                                                <td>destino</td>
+                                                <td>00/00/0000</td>
+                                                <td>00/00/0000</td>
+                                                <td>operadora</td>
+                                                <td>preço</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Carrinho</h5>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>ABC > DEF</td>
+                            <td class="text-end">R$ 1000,00</td>
+                            <td class="text-end">
+                                <a class="btn-link text-dark" role="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd"
+                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>EFG > HIJ</td>
+                            <td class="text-end">R$ 99,00</td>
+                            <td class="text-end">
+                                <a class="btn-link text-dark" role="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd"
+                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th class="text-end" colspan="2">R$ 10000,00</th>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="mt-3 d-grid">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#checkoutModal">
+                        Finalizar compra
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Pagamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="dinheiro-tab" data-bs-toggle="tab"
+                            data-bs-target="#dinheiro" type="button" role="tab" aria-controls="dinheiro"
+                            aria-selected="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-cash" viewBox="0 0 16 16">
+                                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                <path
+                                    d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                            </svg>
+                            <span>Dinheiro</span>
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="cartao-credito-tab" data-bs-toggle="tab"
+                            data-bs-target="#cartao-credito" type="button" role="tab" aria-controls="cartao-credito"
+                            aria-selected="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-credit-card" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z">
+                                </path>
+                                <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z">
+                                </path>
+                            </svg>
+                            <span>Cartão de crédito</span>
+                        </button>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-pane fade show active border border-top-0 p-3" id="dinheiro" role="tabpanel"
+                        aria-labelledby="dinheiro-tab">
+                        <div class="mb-3">
+                            <label class="form-label">Valor</label>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade border border-top-0 p-3" id="cartao-credito" role="tabpanel"
+                        aria-labelledby="cartao-credito-tab">
+                        <div class="mb-3">
+                            <label class="form-label">Número do cartão</label>
+                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000 0000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nome impresso</label>
+                            <input type="text" class="form-control" placeholder="Nome">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 col-sm-4 mb-3">
+                                <label class="form-label">Vencimento</label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control" placeholder="00">&nbsp;
+                                    <input type="text" class="form-control" placeholder="0000">
+                                </div>
+                            </div>
+
+                            <div class="col-3 mb-3">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" placeholder="000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Efetuar pagamento</button>
+            </div>
+        </div>
+    </div>
+</div>

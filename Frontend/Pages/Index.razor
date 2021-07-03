@@ -1,3 +1,10 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<div class="p-4 text-center">
+    <h1>Bem Vindo, @Nome!</h1>
+</div>
+
+@code {
+    [CascadingParameter]
+    public string Nome { get; set; }
+}
