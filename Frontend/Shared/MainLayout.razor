@@ -1,6 +1,7 @@
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inherits LayoutComponentBase
 
-<NavMenu Nome=@Nome />
+<NavMenu Nome=@Nome LogoutClick=@HandleLogout />
 
 <div class="container">
     @if (string.IsNullOrWhiteSpace(Nome))
@@ -43,14 +44,39 @@
     private string nome { get; set; }
     private string error { get; set; }
 
-    private void HandleEnterClick()
+    protected async override Task OnInitializedAsync()
+    {
+        nome = await localStorage.GetItemAsync<string>("nome_usuario");
+        if (!string.IsNullOrWhiteSpace(nome))
+            await ValidaNome();
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task ValidaNome()
     {
         if (!string.IsNullOrWhiteSpace(nome) && nome.Length > 3)
         {
             Nome = nome;
             error = string.Empty;
+            await localStorage.SetItemAsync("nome_usuario", Nome);
         }
         else
+        {
             error = "Nome inválido";
+            await localStorage.SetItemAsync("nome_usuario", string.Empty);
+        }
+    }
+
+    private async void HandleEnterClick()
+    {
+        await ValidaNome();
+    }
+
+    private async void HandleLogout()
+    {
+        Nome = string.Empty;
+        await localStorage.SetItemAsync("nome_usuario", string.Empty);
+        await localStorage.ClearAsync();
     }
 }
