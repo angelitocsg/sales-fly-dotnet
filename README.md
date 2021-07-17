@@ -2,15 +2,15 @@
 
 Projeto de estudos FullStack C#.
 
-## Frontend
+## SalesFly.UI
 
 ### Criar projeto
 ```shell
-dotnet new blazorwasm -o Frontend --pwa
+dotnet new blazorwasm -o SalesFly.UI --pwa
 ```
 
 ### Executar projeto
 ```shell
-cd Frontend
+cd SalesFly.UI
 dotnet run
 ```
