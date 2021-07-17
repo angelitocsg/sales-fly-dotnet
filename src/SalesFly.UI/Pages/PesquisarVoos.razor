@@ -1,3 +1,8 @@
+@using SalesFly.Shared.Models
+@using SalesFly.UI.Services;
+
+@inject IAeroportoService aeroportoService;
+
 @page "/pesquisar-voos"
 
 <h1 class="mt-3 mb-3">Pesquisar vôos</h1>
@@ -10,9 +15,13 @@
                     <label for="origem" class="form-label">Origem</label>
                     <select class="form-select" name="origem" id="origem">
                         <option selected>-- Selecione o aeroporto de origem --</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        @if (aeroportos != null)
+                            @foreach (var item in aeroportos)
+                            {
+                                <optgroup label=@item.Cidade>
+                                    <option value=@item.Sigla>@item.Nome</option>
+                                </optgroup>
+                            }
                     </select>
                 </div>
 
@@ -20,9 +29,13 @@
                     <label for="destino" class="form-label">Destino</label>
                     <select class="form-select" name="destino" id="destino">
                         <option selected>-- Selecione o aeroporto de destino --</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        @if (aeroportos != null)
+                            @foreach (var item in aeroportos)
+                            {
+                                <optgroup label=@item.Cidade>
+                                    <option value=@item.Sigla>@item.Nome</option>
+                                </optgroup>
+                            }
                     </select>
                 </div>
 
@@ -155,7 +168,7 @@
                                 </a>
                             </td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>EFG > HIJ</td>
                             <td class="text-end">R$ 99,00</td>
                             <td class="text-end">
@@ -282,3 +295,13 @@
         </div>
     </div>
 </div>
+
+@code {
+    private IEnumerable<Aeroporto> aeroportos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        aeroportos = await aeroportoService.GetAeroportosAsync();
+        await base.OnInitializedAsync();
+    }
+}
