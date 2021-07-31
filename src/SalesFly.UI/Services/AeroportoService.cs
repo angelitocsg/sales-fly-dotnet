@@ -18,7 +18,7 @@ namespace SalesFly.UI.Services
         public async Task<IEnumerable<Aeroporto>> GetAeroportosAsync()
         {
             HttpResponseMessage httpResponse = await _httpClient.GetAsync("Aeroportos");
-            IEnumerable<Aeroporto> aeroportos = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<Aeroporto>>(); 
+            Aeroporto[] aeroportos = await httpResponse.Content.ReadFromJsonAsync<Aeroporto[]>();
             return aeroportos;
         }
     }

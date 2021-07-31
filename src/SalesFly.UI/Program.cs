@@ -22,7 +22,7 @@ namespace SalesFly.UI
             builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddScoped<IAeroportoService, AeroportoService>();
-
+            
             await builder.Build().RunAsync();
         }
     }
