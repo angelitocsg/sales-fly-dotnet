@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SalesFly.Shared.Models
 {
     public class Aeroporto
@@ -10,6 +12,8 @@ namespace SalesFly.Shared.Models
         }
 
         public string Nome { get; set; }
+        
+        [JsonPropertyName("aeroporto")]
         public string Sigla { get; set; }
         public string Cidade { get; set; }
     }
