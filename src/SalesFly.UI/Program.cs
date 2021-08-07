@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Blazored.LocalStorage;
 using SalesFly.UI.Services;
+using SalesFly.UI.Interfaces;
 
 namespace SalesFly.UI
 {
@@ -22,6 +23,7 @@ namespace SalesFly.UI
             builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddScoped<IAeroportoService, AeroportoService>();
+            builder.Services.AddScoped<IVooService, VooService>();
             
             await builder.Build().RunAsync();
         }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SalesFly.Shared.Models;
 
-namespace SalesFly.UI.Services
+namespace SalesFly.UI.Interfaces
 {
     public interface IAeroportoService
     {

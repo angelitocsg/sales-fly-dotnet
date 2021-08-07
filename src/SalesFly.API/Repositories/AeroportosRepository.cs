@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using SalesFly.API.DataModels;
+using SalesFly.API.Interfaces;
 using SalesFly.Shared.Models;
 
 namespace SalesFly.API.Repositories
 {
-    public class AeroportoRepository : IAeroportoRepository
+    public class AeroportosRepository : IAeroportosRepository
     {
         public async Task<IEnumerable<Aeroporto>> GetAsync()
         {
@@ -20,9 +23,17 @@ namespace SalesFly.API.Repositories
                 PropertyNameCaseInsensitive = true,
             };
 
-            Aeroporto[] aeroporto = await responseMessage.Content.ReadFromJsonAsync<Aeroporto[]>(options);
+            AeroportoDataModel[] aeroportosDataModel = await responseMessage.Content.ReadFromJsonAsync<AeroportoDataModel[]>(options);
 
-            return aeroporto;
+            IEnumerable<Aeroporto> aeroportos = aeroportosDataModel
+                .Select(it => new Aeroporto(
+                   nome: it.nome,
+                   sigla: it.aeroporto,
+                   cidade: it.cidade
+               ))
+               .OrderBy(it => $"{it.Cidade}_{it.Nome}");
+
+            return aeroportos;
         }
     }
 }

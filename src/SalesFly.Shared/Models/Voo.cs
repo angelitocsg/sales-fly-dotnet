@@ -5,27 +5,25 @@ namespace SalesFly.Shared.Models
 {
     public class Voo
     {
-        public string Empresa { get; set; }
-        
-        [JsonPropertyName("numero_voo")]
-        public string NumeroVoo { get; set; }
+        public Voo(string empresa, string numeroVoo, string origem, string destino, DateTime dataSaida, string saida, string chegada, decimal valor)
+        {
+            Empresa = empresa;
+            NumeroVoo = numeroVoo;
+            Origem = origem;
+            Destino = destino;
+            DataSaida = dataSaida;
+            Saida = saida;
+            Chegada = chegada;
+            Valor = valor;
+        }
 
-        [JsonPropertyName("aeroporto_origem")]
-        public string Origem { get; set; }
-
-        [JsonPropertyName("aeroporto_destino")]
-        public string Destino { get; set; }
-
-        [JsonPropertyName("data")]
-        public DateTime DataSaida { get; set; }
-
-        [JsonPropertyName("horario_saida")]
-        public string Saida { get; set; }
-
-        [JsonPropertyName("horario_chegada")]
-        public string Chegada { get; set; }
-
-        [JsonPropertyName("preco")]
-        public decimal Valor { get; set; }
+        public string Empresa { get; private set; }
+        public string NumeroVoo { get; private set; }
+        public string Origem { get; private set; }
+        public string Destino { get; private set; }
+        public DateTime DataSaida { get; private set; }
+        public string Saida { get; private set; }
+        public string Chegada { get; private set; }
+        public decimal Valor { get; private set; }
     }
 }

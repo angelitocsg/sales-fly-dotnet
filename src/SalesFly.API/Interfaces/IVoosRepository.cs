@@ -4,7 +4,7 @@ using SalesFly.Shared.Models;
 
 namespace SalesFly.API.Repositories
 {
-    public interface IUberAirRepository
+    public interface IVoosRepository
     {
         Task<IEnumerable<Voo>> GetAsync();
     }

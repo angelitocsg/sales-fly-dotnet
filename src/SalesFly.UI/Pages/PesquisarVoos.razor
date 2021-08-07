@@ -1,7 +1,7 @@
 @using SalesFly.Shared.Models
-@using SalesFly.UI.Services;
 
 @inject IAeroportoService aeroportoService;
+@inject IVooService vooService;
 
 @page "/pesquisar-voos"
 
@@ -9,43 +9,55 @@
 
 <div class="card">
     <div class="card-body">
-        <form>
-            <div class="row">
-                <div class="col-lg mb-3">
-                    <label for="origem" class="form-label">Origem</label>
-                    <select class="form-select" name="origem" id="origem">
+        <div class="row">
+            <div class="col-lg mb-3">
+                <label for="origem" class="form-label">Origem</label>
+                <select class="form-select" name="origem" id="origem" value=@origem @onchange=@HandleOrigemSelect>
+                    @if (aeroportos == null)
+                    {
+                        <option selected>Carregando...</option>
+                    }
+                    else
+                    {
                         <option selected>-- Selecione o aeroporto de origem --</option>
-                        @if (aeroportos != null)
-                            @foreach (var item in aeroportos)
-                            {
-                                <optgroup label=@item.Cidade>
-                                    <option value=@item.Sigla>@item.Nome</option>
-                                </optgroup>
-                            }
-                    </select>
-                </div>
-
-                <div class="col-lg mb-3">
-                    <label for="destino" class="form-label">Destino</label>
-                    <select class="form-select" name="destino" id="destino">
-                        <option selected>-- Selecione o aeroporto de destino --</option>
-                        @if (aeroportos != null)
-                            @foreach (var item in aeroportos)
-                            {
-                                <optgroup label=@item.Cidade>
-                                    <option value=@item.Sigla>@item.Nome</option>
-                                </optgroup>
-                            }
-                    </select>
-                </div>
-
-                <div class="col-lg-3 mb-3">
-                    <label for="data" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="data" name="data">
-                </div>
+                    }
+                    @if (aeroportos != null)
+                        @foreach (var item in aeroportos)
+                        {
+                            <optgroup label=@item.Cidade>
+                                <option value=@item.Sigla>@item.Sigla: @item.Nome</option>
+                            </optgroup>
+                        }
+                </select>
             </div>
-            <button type="submit" class="btn btn-dark">Pesquisar</button>
-        </form>
+
+            <div class="col-lg mb-3">
+                <label for="destino" class="form-label">Destino</label>
+                <select class="form-select" name="destino" id="destino" value=@destino @onchange=@HandleDestinoSelect>
+                    @if (aeroportos == null)
+                    {
+                        <option selected>Carregando...</option>
+                    }
+                    else
+                    {
+                        <option selected>-- Selecione o aeroporto de origem --</option>
+                    }
+                    @if (aeroportos != null)
+                        @foreach (var item in aeroportos)
+                        {
+                            <optgroup label=@item.Cidade>
+                                <option value=@item.Sigla>@item.Sigla: @item.Nome</option>
+                            </optgroup>
+                        }
+                </select>
+            </div>
+
+            <div class="col-lg-3 mb-3">
+                <label for="data" class="form-label">Data</label>
+                <input type="date" class="form-control" id="data" name="data" @bind-value=data>
+            </div>
+        </div>
+        <button type="button" class="btn btn-dark" @onclick=HandlePesquisar>Pesquisar</button>
     </div>
 </div>
 
@@ -60,85 +72,55 @@
                             <tr>
                                 <th>Origem</th>
                                 <th>Destino</th>
+                                <th>Data</th>
                                 <th>Saída</th>
                                 <th>Chegada</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>origem</td>
-                                <td>destino</td>
-                                <td>00/00/0000</td>
-                                <td>00/00/0000</td>
-                                <td class="text-end">
-                                    <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
-                                        carrinho</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
 
-                                    <table class="table table-sm">
-                                        <tbody>
-                                            <tr>
-                                                <td>origem</td>
-                                                <td>destino</td>
-                                                <td>00/00/0000</td>
-                                                <td>00/00/0000</td>
-                                                <td>operadora</td>
-                                                <td>preço</td>
-                                            </tr>
-                                            <tr>
-                                                <td>origem</td>
-                                                <td>destino</td>
-                                                <td>00/00/0000</td>
-                                                <td>00/00/0000</td>
-                                                <td>operadora</td>
-                                                <td>preço</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            @if (voos != null)
+                                @foreach (var item in voos)
+                                {
+                                    <tr>
+                                        <td>@item.Origem</td>
+                                        <td>@item.Destino</td>
+                                        <td>@item.DataSaida.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Saida</td>
+                                        <td>@item.Chegada</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
+                                                carrinho</button>
+                                        </td>
+                                    </tr>
 
-                                </td>
-                            </tr>
+                                    <tr>
+                                        <td colspan="6">
 
-                            <tr>
-                                <td>origem</td>
-                                <td>destino</td>
-                                <td>00/00/0000</td>
-                                <td>00/00/0000</td>
-                                <td class="text-end">
-                                    <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
-                                        carrinho</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@item.Origem</td>
+                                                        <td>@item.Destino</td>
+                                                        <td>@item.Empresa</td>
+                                                        <td class="text-end">@item.Valor</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                    <table class="table mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <td>origem</td>
-                                                <td>destino</td>
-                                                <td>00/00/0000</td>
-                                                <td>00/00/0000</td>
-                                                <td>operadora</td>
-                                                <td>preço</td>
-                                            </tr>
-                                            <tr>
-                                                <td>origem</td>
-                                                <td>destino</td>
-                                                <td>00/00/0000</td>
-                                                <td>00/00/0000</td>
-                                                <td>operadora</td>
-                                                <td>preço</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        </td>
+                                    </tr>
+                                }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6">
+                                        Sem vôos para a pesquisa atual.
+                                    </td>
+                                </tr>
+                            }
 
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -298,10 +280,47 @@
 
 @code {
     private IEnumerable<Aeroporto> aeroportos;
+    private IEnumerable<Voo> voos;
+
+    private string origem { get; set; }
+    private string destino { get; set; }
+    private DateTime data { get; set; } = DateTime.Today;
 
     protected override async Task OnInitializedAsync()
     {
         aeroportos = await aeroportoService.GetAeroportosAsync();
         await base.OnInitializedAsync();
+    }
+
+    private async Task HandlePesquisar()
+    {
+        if (string.IsNullOrWhiteSpace(origem))
+            return;
+        if (string.IsNullOrWhiteSpace(destino))
+            return;
+        if (data == DateTime.MinValue)
+            return;
+
+        voos = await vooService.GetVoosAsync(origem, destino, data);
+    }
+
+    private void HandleOrigemSelect(ChangeEventArgs e)
+    {
+        origem = string.Empty;
+
+        if (e.Value.ToString().Contains("--"))
+            return;
+
+        origem = e.Value.ToString();
+    }
+
+    private void HandleDestinoSelect(ChangeEventArgs e)
+    {
+        destino = string.Empty;
+
+        if (e.Value.ToString().Contains("--"))
+            return;
+
+        destino = e.Value.ToString();
     }
 }

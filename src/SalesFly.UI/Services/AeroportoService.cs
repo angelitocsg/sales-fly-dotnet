@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using SalesFly.Shared.Models;
+using SalesFly.UI.Interfaces;
 
 namespace SalesFly.UI.Services
 {

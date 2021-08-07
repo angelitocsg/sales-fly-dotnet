@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesFly.API.Repositories;
@@ -9,17 +11,23 @@ namespace SalesFly.API.Controllers
     [Route("[controller]")]
     public class VoosController : ControllerBase
     {
-        private readonly IUberAirRepository _uberAirRepository;
+        private readonly IVoosRepository _voosRepository;
 
-        public VoosController(IUberAirRepository uberAirRepository)
+        public VoosController(IVoosRepository voosRepository)
         {
-            _uberAirRepository = uberAirRepository;
+            _voosRepository = voosRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Voo[]>> GetAsync()
+        [HttpGet("{origem}/{destino}/{data}")]
+        public async Task<ActionResult<Voo[]>> GetAsync(
+            string origem,
+            string destino,
+            DateTime data)
         {
-            return Ok(await _uberAirRepository.GetAsync());
+            var voos = await _voosRepository.GetAsync();
+            var result = voos.Where(it => it.Origem.Equals(origem) && it.Destino.Equals(destino) && it.DataSaida.Equals(data));
+
+            return Ok(result);
         }
     }
 }
