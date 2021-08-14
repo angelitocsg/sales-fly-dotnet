@@ -80,7 +80,7 @@
                         </thead>
                         <tbody>
 
-                            @if (voos != null)
+                            @if (voos != null && voos?.Count() > 0)
                                 @foreach (var item in voos)
                                 {
                                     <tr>
