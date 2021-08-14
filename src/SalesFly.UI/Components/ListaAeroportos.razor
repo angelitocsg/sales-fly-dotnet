@@ -1,0 +1,39 @@
+@using SalesFly.Shared.Models
+
+<div class="col-lg mb-3">
+    <label for=@id class="form-label">@label</label>
+    <select class="form-select" name=@id id=@id value=@value @onchange=@OnSelectItem>
+        @if (aeroportos == null)
+        {
+            <option selected>Carregando...</option>
+        }
+        else
+        {
+            <option selected>-- Selecione o aeroporto de origem --</option>
+        }
+        @if (aeroportos != null)
+            @foreach (var item in aeroportos)
+            {
+                <optgroup label=@item.Cidade>
+                    <option value=@item.Sigla>@item.Sigla: @item.Nome</option>
+                </optgroup>
+            }
+    </select>
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<Aeroporto> aeroportos{ get; set; }
+
+    [Parameter]
+    public string label { get; set; }
+
+    [Parameter]
+    public string id { get; set; }
+
+    [Parameter]
+    public string value { get; set; }
+
+    [Parameter]
+    public Action<ChangeEventArgs> OnSelectItem { get; set; }
+}
