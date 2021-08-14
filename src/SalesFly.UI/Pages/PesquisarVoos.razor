@@ -1,5 +1,6 @@
 @using SalesFly.Shared.Models
 
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IAeroportoService aeroportoService;
 @inject IVooService vooService;
 
@@ -10,47 +11,12 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg mb-3">
-                <label for="origem" class="form-label">Origem</label>
-                <select class="form-select" name="origem" id="origem" value=@origem @onchange=@HandleOrigemSelect>
-                    @if (aeroportos == null)
-                    {
-                        <option selected>Carregando...</option>
-                    }
-                    else
-                    {
-                        <option selected>-- Selecione o aeroporto de origem --</option>
-                    }
-                    @if (aeroportos != null)
-                        @foreach (var item in aeroportos)
-                        {
-                            <optgroup label=@item.Cidade>
-                                <option value=@item.Sigla>@item.Sigla: @item.Nome</option>
-                            </optgroup>
-                        }
-                </select>
-            </div>
 
-            <div class="col-lg mb-3">
-                <label for="destino" class="form-label">Destino</label>
-                <select class="form-select" name="destino" id="destino" value=@destino @onchange=@HandleDestinoSelect>
-                    @if (aeroportos == null)
-                    {
-                        <option selected>Carregando...</option>
-                    }
-                    else
-                    {
-                        <option selected>-- Selecione o aeroporto de origem --</option>
-                    }
-                    @if (aeroportos != null)
-                        @foreach (var item in aeroportos)
-                        {
-                            <optgroup label=@item.Cidade>
-                                <option value=@item.Sigla>@item.Sigla: @item.Nome</option>
-                            </optgroup>
-                        }
-                </select>
-            </div>
+            <ListaAeroportos aeroportos=@aeroportos id="origem" label="Origem" value=@origem
+                OnSelectItem=@HandleOrigemSelect />
+
+            <ListaAeroportos aeroportos=@aeroportos id="destino" label="Destino" value=@destino
+                OnSelectItem=@HandleDestinoSelect />
 
             <div class="col-lg-3 mb-3">
                 <label for="data" class="form-label">Data</label>
@@ -90,7 +56,8 @@
                                         <td>@item.Saida</td>
                                         <td>@item.Chegada</td>
                                         <td class="text-end">
-                                            <button type="button" class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
+                                            <button type="button" @onclick=@(e => HandleAdicionarAoCarrinho(item))
+                                        class="btn btn-secondary btn-sm text-nowrap">Adicionar ao
                                                 carrinho</button>
                                         </td>
                                     </tr>
@@ -135,40 +102,20 @@
 
                 <table class="table">
                     <tbody>
-                        <tr>
-                            <td>ABC > DEF</td>
-                            <td class="text-end">R$ 1000,00</td>
-                            <td class="text-end">
-                                <a class="btn-link text-dark" role="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path
-                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                        <path fill-rule="evenodd"
-                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EFG > HIJ</td>
-                            <td class="text-end">R$ 99,00</td>
-                            <td class="text-end">
-                                <a class="btn-link text-dark" role="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path
-                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                        <path fill-rule="evenodd"
-                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach (var item in carrinho.Items)
+                        {
+                            <tr>
+                                <td>@item.Origem > @item.Destino</td>
+                                <td class="text-end">R$ @item.Valor</td>
+                                <td class="text-end">
+                                    <BotaoRemoveCarrinho OnClickRemove=@HandleRemoverDoCarrinho LineId=@item.LineId />
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-end" colspan="2">R$ 10000,00</th>
+                            <th class="text-end" colspan="2">R$ @carrinho.Total</th>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -236,7 +183,8 @@
                         aria-labelledby="dinheiro-tab">
                         <div class="mb-3">
                             <label class="form-label">Valor</label>
-                            <input type="text" class="form-control" readonly>
+                            <input type="text" class="form-control" value=@(string.Format("R$ {0:#.00}",carrinho.Total))
+                                readonly>
                         </div>
                     </div>
 
@@ -266,13 +214,23 @@
                                 <input type="text" class="form-control" placeholder="000">
                             </div>
                         </div>
+
+                        <div>
+                            <label class="form-label">Parcelas</label>
+                            <select class="form-select">
+                                <option>1x R$ @(string.Format("{0:#.00}",carrinho.Total))</option>
+                                <option>2x R$ @(string.Format("{0:#.00}",carrinho.Total / 2))</option>
+                                <option>3x R$ @(string.Format("{0:#.00}",carrinho.Total / 3))</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Efetuar pagamento</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    @onclick=HandleEfetuarPagamento>Efetuar pagamento</button>
             </div>
         </div>
     </div>
@@ -281,6 +239,10 @@
 @code {
     private IEnumerable<Aeroporto> aeroportos;
     private IEnumerable<Voo> voos;
+    private Carrinho carrinho;
+
+    [CascadingParameter]
+    public string Nome { get; set; }
 
     private string origem { get; set; }
     private string destino { get; set; }
@@ -288,6 +250,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        carrinho = new Carrinho(Nome);
         aeroportos = await aeroportoService.GetAeroportosAsync();
         await base.OnInitializedAsync();
     }
@@ -322,5 +285,25 @@
             return;
 
         destino = e.Value.ToString();
+    }
+
+    private void HandleAdicionarAoCarrinho(Voo voo)
+    {
+        carrinho.AdicionaItem(voo);
+    }
+
+    private void HandleRemoverDoCarrinho(int lineId)
+    {
+        Console.WriteLine("REMOVER " + carrinho.Items.Count());
+        carrinho.RemoveItem(lineId);
+        Console.WriteLine("REMOVER " + carrinho.Items.Count());
+        StateHasChanged();
+    }
+
+    private async Task HandleEfetuarPagamento()
+    {
+        await localStorage.SetItemAsync("meus_voos", carrinho);
+        carrinho = new Carrinho(Nome);
+        voos = null;
     }
 }

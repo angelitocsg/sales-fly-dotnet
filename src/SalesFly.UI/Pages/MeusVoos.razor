@@ -1,4 +1,8 @@
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
 @page "/meus-voos"
+@using System.Text.Json
+@using SalesFly.Shared.Models
 
 <h1 class="mt-3 mb-3">Meus vôos</h1>
 
@@ -14,13 +18,29 @@
                 </tr>
             </thead>
             <tbody>
-               <tr>
-                   <td>#10000</td>
-                   <td class="text-center">10/07/2021</td>
-                   <td>GRU > CMP</td>
-                   <td class="text-end">R$ 500,00</td>
-               </tr> 
-            </tbody>
-        </table>
+                @if (carrinho!=null)
+                @foreach (var item in carrinho.Items)
+                {
+                    <tr>
+                        <td>#@carrinho.Ticket</td>
+                        <td class="text-center">@carrinho.Data</td>
+                        <td>@item.Origem > @item.Destino</td>
+                        <td class="text-end">@(string.Format("R$ {0:#.00}", item.Valor))</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+@code {
+    private Carrinho carrinho;
+
+    protected override async Task OnInitializedAsync()
+    {
+        carrinho = await localStorage.GetItemAsync<Carrinho>("meus_voos");
+
+        Console.WriteLine(JsonSerializer.Serialize(carrinho));
+        await base.OnInitializedAsync();
+    }
+}
